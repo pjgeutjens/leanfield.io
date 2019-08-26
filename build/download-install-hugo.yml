@@ -4,3 +4,4 @@
 # 2. Installs Hugo executable
 - script: sudo dpkg -i $(Pipeline.Workspace)/hugo*.deb
   displayName: Install Hugo
+# this is strange but the last script update didn't go through
