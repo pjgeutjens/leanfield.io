@@ -1,0 +1,16 @@
+stages:
+# build stage: build site codebase to use for deployment
+- stage: Build_Codebase
+  jobs:
+    - template: build/site-build-job.yml
+      parameters:
+        name: build_live_site
+        displayName: Live site (exclude drafts & future published content)
+        # always build on pushes to master
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        hugo_version: 0.57.2
+        hugo_config_baseUrl: $(LiveSiteBaseUrl)
+        hugo_config_flags: '--minify'
+        site_storage_account: $(LiveSiteAccount)
+        site_storage_key: $(LiveSiteAccessKey)
+        build_tag: live-site

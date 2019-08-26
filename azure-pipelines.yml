@@ -1,19 +1,80 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Azure DevOps build pipeline
+# 
+# Triggered on all push to master. Creates two builds & deployes both
+# Build 1 - Preview: builds the site including all draft & schedules content to go live
+# Build 2 - Live: builds the live site
+#
+# Triggered on schedule to build site daily, Monday-Friday @ 3 minutes past 8a, 11a, 1p & 6p ET (1400 UTC)
 
+# build on all pushes
 trigger:
-- master
+  branches:
+    include:
+      - '*'
 
-pool:
-  vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+# schedules:
+# # run @ 10a M-F (1500 UTC)
+# - cron: "3 12,15,17,22 * * Mon-Fri"
+#   displayName: Daily build of live site
+#   branches:
+#     include:
+#     - master
+#   # always run the schedule, even if no source code changes
+#   always: true
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+
+variables:
+  - group: leanfield sites
+
+
+stages:
+  - stage: Build_Codebase
+    jobs:
+      # JOB: Build preview site
+      - template: build/site-build-job.yml
+        parameters:
+          name: build_preview_site
+          displayName: Preview site (include drafts & future published content)
+          # always build on pushes to any branch; never on scheduled builds
+          condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
+          hugo_version: 0.57.2
+          hugo_config_baseUrl: $(PreviewSiteBaseUrl)
+          hugo_config_flags: '--buildFuture --buildExpired'
+          site_storage_account: $(PreviewSiteAccount)
+          site_storage_key: $(PreviewSiteAccessKey)
+          build_tag: preview-site
+    # JOB: Build live site
+    # - template: build/site-build-job.yml
+    #   parameters:
+    #     name: build_live_site
+    #     displayName: Live site (exclude drafts & future published content)
+    #     # always build on pushes to master
+    #     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    #     hugo_version: 0.57.2
+    #     hugo_config_baseUrl: $(LiveSiteBaseUrl)
+    #     hugo_config_flags: '--minify'
+    #     site_storage_account: $(LiveSiteAccount)
+    #     site_storage_key: $(LiveSiteAccessKey)
+    #     build_tag: live-site
+  - stage: Deploy_Codebase
+    dependsOn: Build_Codebase
+    jobs:
+      # JOB: Deploy preview site
+      - template: build/site-deploy-job.yml
+        parameters:
+          name: deploy_preview_site
+          displayName: Preview site (include drafts & future published content)
+          condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
+          site_storage_account: $(PreviewSiteAccount)
+          site_storage_key: $(PreviewSiteAccessKey)
+          build_tag: preview-site
+#     # JOB: Deploy live site
+#     - template: build/site-deploy-job.yml
+#       parameters:
+#         name: deploy_live_site
+#         displayName: Live site (exclude drafts & future published content)
+#         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#         site_storage_account: $(LiveSiteAccount)
+#         site_storage_key: $(LiveSiteAccessKey)
+#         build_tag: live-site

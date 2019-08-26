@@ -1,0 +1,6 @@
+# 7. Publish Hugo installer for later stages
+- publish: $(Pipeline.Workspace)/hugo_${{ parameters.hugo_version }}_Linux-64bit.deb
+  artifact: hugo-installer
+# 8. Publish built site codebase for later stages
+- publish: $(Pipeline.Workspace)/hugo-build.zip
+  artifact: build-${{ parameters.build_tag }}
