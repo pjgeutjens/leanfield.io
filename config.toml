@@ -1,0 +1,78 @@
+baseurl = "/"
+languageCode = "en-us"
+theme = "leanfield-theme"
+
+[params]
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
+
+  # Metadata mostly used in document's head
+  description = "Homepage and blog by Pieter Jan Geutjens"
+  keywords = "homepage, blog, automation, devops, development, programming"
+  images = [""]
+
+  # Directory name of your blog content (default is `content/posts`)
+  contentTypeName = "posts"
+  # Default theme "light" or "dark"
+  defaultTheme = "dark"
+
+  customCSS = ["/css/custom.css"]
+
+[languages]
+  [languages.en]
+    title = "leanfield.io"
+    subtitle = "a place to muse about all things Cloud, Automation and Devops"
+    homeSubtitle = "a place to muse about all things Cloud, Automation and Devops"
+    keywords = ""
+    copyright = ""
+    readOtherPosts = "Read other posts"
+
+    [languages.en.params.logo]
+      logoText = "cd ~"
+      logoHomeLink = "/"
+      headshotPath = "/img/pjgeutjens_sq.jpg"
+    # or
+    #
+    # path = "/img/your-example-logo.svg"
+    # alt = "Your example logo alt text"
+
+	# You can create a language based menu
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about"
+      [[languages.en.menu.main]]
+        identifier = "blog"
+        name       = "Blog"
+        url        = "/posts"
+
+# And you can even create generic menu
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name       = "About"
+    url        = "/about"
+  [[menu.main]]
+    identifier = "blog"
+    name       = "Blog"
+    url        = "/posts"
+
+    # Social icons
+  [[params.social]]
+    name = "twitter"
+    url  = "https://twitter.com/PJGeutjens"
+
+  [[params.social]]
+    name = "email"
+    url  = "mailto:pieter.geutjens@leanfield.io"
+
+  [[params.social]]
+    name = "github"
+    url  = "https://github.com/pjgeutjens"
+
+  [[params.social]]
+    name = "linkedin"
+    url  = "https://www.linkedin.com/in/pieterjangeutjens/"

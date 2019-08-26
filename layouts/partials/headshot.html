@@ -1,0 +1,8 @@
+<a href="{{ if .Site.Params.Logo.LogoHomeLink }}{{ .Site.Params.Logo.LogoHomeLink }}{{else}}{{ .Site.BaseURL }}{{ end }}" style="text-decoration: none;">
+    <div class="logo">
+                    {{ if .Site.Params.Logo.headshotPath }}
+            <img src="{{ .Site.Params.Logo.headshotPath }}" alt="{{ .Site.Params.Logo.alt }}" />
+            {{else}}
+        {{ end }}
+    </div>
+</a>
