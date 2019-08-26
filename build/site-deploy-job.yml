@@ -44,6 +44,20 @@ jobs:
       archiveFilePatterns: '$(Pipeline.Workspace)/build-${{ parameters.build_tag }}/hugo-build.zip'
       destinationFolder: '$(Pipeline.Workspace)/build-${{ parameters.build_tag }}/deploy'
       cleanDestinationFolder: false
+  # 5a. Executes Hugo `deploy` command to publish all files to Azure Storage blob
+  - script: 'ls -al'
+    workingDirectory: '$(Pipeline.Workspace)/build-${{ parameters.build_tag }}/deploy'
+    displayName: 'list all files'
+    env:
+      AZURE_STORAGE_ACCOUNT: ${{ parameters.site_storage_account }}
+      AZURE_STORAGE_KEY: ${{ parameters.site_storage_key }}
+    # 5a. Executes Hugo `deploy` command to publish all files to Azure Storage blob
+  - script: 'cat config.toml'
+    workingDirectory: '$(Pipeline.Workspace)/build-${{ parameters.build_tag }}/deploy'
+    displayName: 'list all files'
+    env:
+      AZURE_STORAGE_ACCOUNT: ${{ parameters.site_storage_account }}
+      AZURE_STORAGE_KEY: ${{ parameters.site_storage_key }}
   # 5. Executes Hugo `deploy` command to publish all files to Azure Storage blob
   - script: 'hugo deploy --maxDeletes -1'
     workingDirectory: '$(Pipeline.Workspace)/build-${{ parameters.build_tag }}/deploy'
