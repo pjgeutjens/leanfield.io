@@ -3,7 +3,7 @@
   displayName: Copy Hugo built site files to staging folder "deploy"
   inputs:
     Contents: |
-      config.toml
+      config.*
       public/**
       resources/**
       static/**
