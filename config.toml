@@ -76,8 +76,9 @@ theme = "leanfield-theme"
   [[params.social]]
     name = "linkedin"
     url  = "https://www.linkedin.com/in/pieterjangeutjens/"
-  
-  [deployment]
-    [[deployment.targets]]
-      name = "azure leanfield"
-      url = "azblob://$web"
+
+# Deployment to Azure Blob storage
+[deployment]
+  [[deployment.targets]]
+    name = "azure leanfield.io"
+    url = "azblob://$web"
