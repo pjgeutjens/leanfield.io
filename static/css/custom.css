@@ -24,3 +24,11 @@ h1, h2, h3, h4, h5, h6 {
 .posts {
     max-width: 1200px;
 }
+
+.container {
+    flex: 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
