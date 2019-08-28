@@ -16,7 +16,7 @@ theme = "leanfield-theme"
   # Directory name of your blog content (default is `content/posts`)
   contentTypeName = "posts"
   # Default theme "light" or "dark"
-  defaultTheme = "dark"
+  defaultTheme = "light"
 
   customCSS = ["/css/custom.css"]
 
