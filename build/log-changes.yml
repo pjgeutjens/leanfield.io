@@ -1,7 +1,0 @@
-# 4. Executes Hugo `deploy` command to log all files that would be 
-#    added/updated/deleted to the Azure site
-- script: hugo deploy --maxDeletes -1 --dryRun
-  displayName: Log files added/updated/deleted in site build
-  env:
-    AZURE_STORAGE_ACCOUNT: ${{ parameters.site_storage_account }}
-    AZURE_STORAGE_KEY: ${{ parameters.site_storage_key }}
